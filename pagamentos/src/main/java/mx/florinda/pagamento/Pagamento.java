@@ -17,12 +17,15 @@ public class Pagamento extends PanacheEntity {
   @Enumerated(EnumType.STRING)
   public StatusPagamento status;
 
+  public Long pedidoId;
 
   @Override
   public String toString() {
-    return "Pedido{" +
+    return "Pagamento{" +
             "id=" + id +
+            ", pedidoId=" + pedidoId +
             ", status=" + status +
+            ", valor=" + valor +
             '}';
   }
 }
