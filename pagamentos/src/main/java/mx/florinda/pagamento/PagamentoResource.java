@@ -38,7 +38,7 @@ public class PagamentoResource {
                       pagamento.status = StatusPagamento.CONFIRMADO;
 
                       PagamentoConfirmadoEvent evento =
-                              new PagamentoConfirmadoEvent(pagamento.id, pagamento.pedidoId);
+                              new PagamentoConfirmadoEvent(pagamento.id, pagamento.pedidoId, pagamento.valor);
                       emitter.send(evento);
                     }));
   }

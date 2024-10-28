@@ -5,6 +5,8 @@ services:
       - '9094:9094'
     networks:
       - florinda-eats-network
+    volumes:
+      - kafka.florinda.eats:/bitnami/kafka
     environment:
       - KAFKA_CFG_NODE_ID=0
       - KAFKA_CFG_PROCESS_ROLES=controller,broker
@@ -13,5 +15,46 @@ services:
       - KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP=CONTROLLER:PLAINTEXT,EXTERNAL:PLAINTEXT,PLAINTEXT:PLAINTEXT
       - KAFKA_CFG_CONTROLLER_QUORUM_VOTERS=0@kafka:9093
       - KAFKA_CFG_CONTROLLER_LISTENER_NAMES=CONTROLLER
+  florinda.eats.pedidos.db:
+    image: mysql:8
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    ports:
+      - '3306:3306'
+    networks:
+      - florinda-eats-network
+    volumes:
+      - mysql.florinda.eats.pedidos:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: florinda_eats_pedidos
+    deploy:
+      resources:
+        limits:
+          cpus: "1.0"
+          memory: 512M
+  florinda.eats.pagamentos.db:
+    image: mysql:8
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    ports:
+      - '3307:3306'
+    networks:
+      - florinda-eats-network
+    volumes:
+      - mysql.florinda.eats.pagamentos:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: florinda_eats_pagamentos
+    deploy:
+      resources:
+        limits:
+          cpus: "1.0"
+          memory: 512M
 networks:
   florinda-eats-network:
+volumes:
+  kafka.florinda.eats:
+  mysql.florinda.eats.pedidos:
+  mysql.florinda.eats.pagamentos:
+
