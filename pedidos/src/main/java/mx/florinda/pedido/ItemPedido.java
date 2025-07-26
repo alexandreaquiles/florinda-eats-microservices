@@ -1,5 +1,6 @@
 package mx.florinda.pedido;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.quarkus.hibernate.reactive.panache.PanacheEntity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToOne;
@@ -14,6 +15,7 @@ public class ItemPedido extends PanacheEntity {
   public BigDecimal precoUnitario;
   public String observacao;
 
+  @JsonIgnore
   @ManyToOne
   public Pedido pedido;
 

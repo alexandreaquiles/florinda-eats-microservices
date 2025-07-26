@@ -1,12 +1,10 @@
 package mx.florinda.pedido;
 
 import io.quarkus.hibernate.reactive.panache.PanacheEntity;
-import jakarta.persistence.Embedded;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
+import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 public class Pedido extends PanacheEntity {
@@ -18,6 +16,9 @@ public class Pedido extends PanacheEntity {
 
   @Embedded
   public Cliente cliente;
+
+  @OneToMany(mappedBy = "pedido")
+  public List<ItemPedido> itensPedido;
 
   @Override
   public String toString() {
