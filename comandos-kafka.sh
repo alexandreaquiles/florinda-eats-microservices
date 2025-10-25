@@ -1,29 +1,37 @@
-docker exec -it florinda-eats-microservices-kafka-1 kafka-topics.sh --bootstrap-server localhost:9094 --create --partitions 2 --topic pagamentosConfirmados
-
+docker exec -it kafka /opt/kafka/bin/kafka-topics.sh --bootstrap-server localhost:9092 --create --topic pagamentosConfirmados
 # Created topic pagamentosConfirmados.
 
-docker exec -it florinda-eats-microservices-kafka-1 kafka-topics.sh --bootstrap-server localhost:9094 --describe --topic pagamentosConfirmados
-
-# Topic: pagamentosConfirmados	TopicId: dMu4BDHmTaOOWBoYASo1DQ	PartitionCount: 2	ReplicationFactor: 1	Configs: 
-#	Topic: pagamentosConfirmados	Partition: 0	Leader: 0	Replicas: 0	Isr: 0
-#	Topic: pagamentosConfirmados	Partition: 1	Leader: 0	Replicas: 0	Isr: 0
-
-docker exec -it florinda-eats-microservices-kafka-1 kafka-topics.sh --bootstrap-server localhost:9094 --list
-
+docker exec -it kafka /opt/kafka/bin/kafka-topics.sh --bootstrap-server localhost:9092 --list
 # __consumer_offsets
 # pagamentosConfirmados
 
-docker exec -it florinda-eats-microservices-kafka-1 kafka-console-producer.sh --bootstrap-server localhost:9094 --topic pagamentosConfirmados
+docker exec -it kafka /opt/kafka/bin/kafka-topics.sh --bootstrap-server localhost:9092 --describe --topic pagamentosConfirmados
+# Topic: pagamentosConfirmados	TopicId: IRuQelnHRDOb9f4ur_rVrA	PartitionCount: 3	ReplicationFactor: 1	Configs: 
+# 	Topic: pagamentosConfirmados	Partition: 0	Leader: 1	Replicas: 1	Isr: 1	Elr: 	LastKnownElr: 
+# 	Topic: pagamentosConfirmados	Partition: 1	Leader: 1	Replicas: 1	Isr: 1	Elr: 	LastKnownElr: 
+# 	Topic: pagamentosConfirmados	Partition: 2	Leader: 1	Replicas: 1	Isr: 1	Elr: 	LastKnownElr: 
+
+docker exec -it kafka /opt/kafka/bin/kafka-console-producer.sh --bootstrap-server localhost:9092 --topic pagamentosConfirmados
 # >{"pagamentoId": 1, "pedidoId": 1}
 # >{"pagamentoId":2,"pedidoId":2}
 # >
 
-docker exec -it florinda-eats-microservices-kafka-1 kafka-console-consumer.sh --bootstrap-server localhost:9094 --topic pagamentosConfirmados
+docker exec -it kafka /opt/kafka/bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic pagamentosConfirmados --from-beginning
 # {"pagamentoId": 1, "pedidoId": 1}
 # {"pagamentoId":2,"pedidoId":2}
 
-docker exec -it florinda-eats-microservices-kafka-1 kafka-consumer-groups.sh --bootstrap-server localhost:9094 --all-groups --describe 
-# GROUP           TOPIC                 PARTITION  CURRENT-OFFSET  LOG-END-OFFSET  LAG             CONSUMER-ID                                           HOST            CLIENT-ID
-# teste           pagamentosConfirmados 0          0               0               0               console-consumer-d6d5e8d1-c9a4-450e-be69-1b719d0c8dba /172.19.0.2     console-consumer
-# teste           pagamentosConfirmados 1          2               2               0               console-consumer-d6d5e8d1-c9a4-450e-be69-1b719d0c8dba /172.19.0.2     console-consumer
+docker exec -it kafka /opt/kafka/bin/kafka-consumer-groups.sh --bootstrap-server localhost:9092 --all-groups --describe 
+# Consumer group 'console-consumer-621' has no active members.
+
+
+
+
+
+
+
+
+
+
+
+
 
