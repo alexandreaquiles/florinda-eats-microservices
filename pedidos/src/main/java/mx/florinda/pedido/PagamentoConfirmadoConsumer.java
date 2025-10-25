@@ -14,7 +14,7 @@ public class PagamentoConfirmadoConsumer {
     return Panache.withTransaction(() ->
             Pedido.<Pedido>findById(evento.pedidoId)
                     .onItem().ifNotNull().invoke(pedido -> {
-                      System.out.println("Vai atualizar o pedido: %s".formatted(pedido));
+                      System.out.printf("Vai atualizar o pedido: %s %n", pedido);
                       pedido.status = StatusPedido.PAGO;
                     })).replaceWithVoid();
   }
